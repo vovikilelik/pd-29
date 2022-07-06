@@ -27,7 +27,7 @@ class AdsViewSet(ModelViewSet):
 
     serializer_class = AdSerializer
     pagination_class = DefaultPaginationSet
-    filter_backends = [SearchFilter, PriceFilterBackend, LocationFilterBackend, CategoryIdFilterBackend]
+    filter_backends = [PriceFilterBackend, CategoryIdFilterBackend, LocationFilterBackend, SearchFilter]
 
     search_fields = ['name', 'description']
 
