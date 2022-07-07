@@ -12,6 +12,8 @@ class User(models.Model):
     password = models.TextField(max_length=50)
     role = models.CharField(max_length=20)
     age = models.IntegerField()
+    birth_date = models.DateField()
+    email = models.EmailField(unique=True)
 
     locations = models.ManyToManyField(Location)
 

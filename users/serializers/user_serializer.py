@@ -1,11 +1,14 @@
 from rest_framework import serializers
 
 from ads.models import Ad
+from share.api.custom_validators import AgeAllowValidator, rambler_ban_validator
 from users.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
+    birth_date = serializers.DateField(allow_null=False, validators=[AgeAllowValidator(9)])
+    email = serializers.EmailField(validators=[rambler_ban_validator])
 
     locations = serializers.SlugRelatedField(
         many=True,

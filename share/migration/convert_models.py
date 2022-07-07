@@ -19,6 +19,7 @@ def dict_to_cat(item):
 
     category.id = item['id']
     category.name = item['name']
+    category.slug = f"{item['id']}-{item['name']}"
 
     category.save()
 

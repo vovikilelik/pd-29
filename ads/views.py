@@ -12,6 +12,7 @@ from ads.filters.price_filter_backend import PriceFilterBackend
 from ads.models import Ad
 from ads.serializers.ad_serializer import AdSerializer
 from share.api.default_pagination_set import DefaultPaginationSet
+from share.migration.convert_models import convert_models
 
 
 class Hello(View):

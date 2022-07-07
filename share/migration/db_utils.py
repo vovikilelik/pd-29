@@ -1,3 +1,5 @@
+from datetime import date
+
 from ads.models import User, Ad, Category
 
 
@@ -11,6 +13,9 @@ def create_user_model(data_dict, user=User()) -> User:
     user.password = data_dict['password']
     user.role = data_dict['role']
     user.age = data_dict['age']
+
+    user.email = f"{data_dict['username']}@mail.ru"
+    user.birth_date = date(1990, 1, 1)
 
     if 'locations' in data_dict:
         user.save()
