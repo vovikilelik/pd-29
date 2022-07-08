@@ -9,18 +9,21 @@ from rest_framework.viewsets import ModelViewSet
 from ads.filters.category_id_filter_backend import CategoryIdFilterBackend
 from ads.filters.location_filter_backend import LocationFilterBackend
 from ads.filters.price_filter_backend import PriceFilterBackend
-from ads.models import Ad
+from ads.models import Ad, Category
 from ads.serializers.ad_serializer import AdSerializer
+from ads.serializers.category_serializer import CategorySerializer
 from share.api.default_pagination_set import DefaultPaginationSet
-from share.migration.convert_models import convert_models
+from share.api.permissions import create_custom_action_permission, IsAuthenticatedOrAdmin
+from users.models import User
 
 
-class Hello(View):
+class IsOwner(IsAuthenticatedOrAdmin):
 
-    def get(self, request):
-        # convert_models()
+    def has_object_permission(self, request, view, obj):
+        if obj.author_id == request.user.id:
+            return True
 
-        return HttpResponse('ok', status=200)
+        return request.user.role == User.ADMIN
 
 
 class AdsViewSet(ModelViewSet):
@@ -29,6 +32,7 @@ class AdsViewSet(ModelViewSet):
     serializer_class = AdSerializer
     pagination_class = DefaultPaginationSet
     filter_backends = [PriceFilterBackend, CategoryIdFilterBackend, LocationFilterBackend, SearchFilter]
+    permission_classes = [create_custom_action_permission(IsOwner, actions=['update', 'destroy'])]
 
     search_fields = ['name', 'description']
 
@@ -44,3 +48,10 @@ class AdImageUpload(UpdateAPIView):
         ad.save()
 
         return JsonResponse(AdSerializer(ad).data)
+
+
+class CategoriesViewSet(ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    pagination_class = DefaultPaginationSet
+

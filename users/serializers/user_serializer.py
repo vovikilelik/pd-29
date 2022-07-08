@@ -7,6 +7,7 @@ from users.models import User
 
 class UserSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
+
     birth_date = serializers.DateField(allow_null=False, validators=[AgeAllowValidator(9)])
     email = serializers.EmailField(validators=[rambler_ban_validator])
 
@@ -21,6 +22,14 @@ class UserSerializer(serializers.ModelSerializer):
     def get_total_published(self, user):
         ads = Ad.objects.filter(author_id=user.id, is_published=True)
         return len(ads)
+
+    # def create(self, data):
+    #     user = super().create(data)
+    #
+    #     user.set_password(user.password)
+    #     user.save()
+    #
+    #     return user
 
     class Meta:
         model = User

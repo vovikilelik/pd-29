@@ -1,6 +1,6 @@
 from typing import Callable, Any
 
-from share.migration.lib.csv.csv import Csv
+from share.dataset_utils.lib.csv.csv import Csv
 
 
 def csv_to_model(file_name: str, reducer: Callable[[dict[str, str]], Any]):

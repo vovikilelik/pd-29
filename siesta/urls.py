@@ -18,12 +18,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from ads.views import Hello, AdsViewSet
-from categories.views import CategoriesViewSet
-from locations.views import LocationsViewSet
+from ads.views import AdsViewSet, CategoriesViewSet
 from siesta import settings
-from users.views import UsersViewSet
+from users.views import UsersViewSet, LocationsViewSet, LogoutView
 
 router = routers.SimpleRouter()
 
@@ -33,8 +33,11 @@ router.register('categories', CategoriesViewSet)
 router.register('ads', AdsViewSet)
 
 urlpatterns = [
-    path('', Hello.as_view()),
     path('admin/', admin.site.urls),
+    path('auth/', obtain_auth_token),
+    path('logout/', LogoutView.as_view()),
+    path('token/', TokenObtainPairView.as_view()),
+    path('token/refresh/', TokenRefreshView.as_view()),
     path('ads/', include('ads.urls')),
 ]
 

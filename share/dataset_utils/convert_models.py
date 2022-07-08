@@ -1,12 +1,12 @@
-from categories.models import Category
-from locations.models import Location
-from share.migration.csv_to_model import csv_to_model
-from share.migration.db_utils import create_ad_model, create_user_model
+from ads.models import Category
+from share.dataset_utils.csv_to_model import csv_to_model
+from share.dataset_utils.db_utils import create_ad_model, create_user_model
+from users.models import Location
 
-FILE_NAME_ADS = './datasets/ad.csv'
-FILE_NAME_CATEGORIES = './datasets/category.csv'
-FILE_NAME_LOCATIONS = './datasets/location.csv'
-FILE_NAME_USERS = './datasets/user.csv'
+FILE_NAME_ADS = './assets/datasets/ad.csv'
+FILE_NAME_CATEGORIES = './assets/datasets/category.csv'
+FILE_NAME_LOCATIONS = './assets/datasets/location.csv'
+FILE_NAME_USERS = './assets/datasets/user.csv'
 
 
 def dict_to_ad(item):

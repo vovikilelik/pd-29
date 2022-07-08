@@ -1,19 +1,34 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 # Create your models here.
-from locations.models import Location
 
 
-class User(models.Model):
+class Location(models.Model):
     id = models.BigAutoField(primary_key=True, auto_created=True)
-    first_name = models.TextField()
-    last_name = models.TextField()
-    username = models.TextField(max_length=50)
-    password = models.TextField(max_length=50)
-    role = models.CharField(max_length=20)
-    age = models.IntegerField()
-    birth_date = models.DateField()
-    email = models.EmailField(unique=True)
+    name = models.TextField()
+    lat = models.CharField(max_length=20)
+    lon = models.TextField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Адрес'
+        verbose_name_plural = 'Адреса'
+
+
+class User(AbstractUser):
+
+    MEMBER = 'member'
+    MODERATOR = 'moderator'
+    ADMIN = 'admin'
+
+    ROLE_CHOICES = [(MEMBER, 'Участник'), (MODERATOR, 'Модератор'), (ADMIN, 'Админ')]
+
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default=MEMBER)
+    age = models.IntegerField(null=True)
+    birth_date = models.DateField(null=True)
 
     locations = models.ManyToManyField(Location)
 

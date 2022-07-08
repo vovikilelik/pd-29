@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from categories.models import Category
+from ads.models import Category
 
 
 class CategorySerializer(serializers.ModelSerializer):
