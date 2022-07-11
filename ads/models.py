@@ -1,6 +1,5 @@
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, MinValueValidator
 from django.db import models
-
 from users.models import User
 
 
@@ -20,9 +19,9 @@ class Category(models.Model):
 class Ad(models.Model):
     id = models.BigAutoField(primary_key=True, auto_created=True)
     name = models.TextField(validators=[MinLengthValidator(10)], null=False)
-    price = models.FloatField()
+    price = models.FloatField(validators=[MinValueValidator(0)])
     description = models.TextField(null=True)
-    is_published = models.BooleanField()
+    is_published = models.BooleanField(default=False)
 
     image = models.ImageField(upload_to='images/', null=True)
 
