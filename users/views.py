@@ -28,7 +28,7 @@ class UsersViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     pagination_class = DefaultPaginationSet
-    permission_classes = [create_custom_action_permission(IsOwner)]
+    # permission_classes = [create_custom_action_permission(IsOwner)]
 
 
 class LogoutView(APIView):

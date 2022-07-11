@@ -8,7 +8,7 @@ class Selection(models.Model):
     id = models.BigAutoField(primary_key=True, auto_created=True)
     name = models.TextField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    items = models.ManyToManyField(Ad)
+    items = models.ManyToManyField(Ad, blank=True)
 
     def __str__(self):
         return self.name
